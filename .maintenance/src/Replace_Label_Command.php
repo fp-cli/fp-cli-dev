@@ -29,7 +29,7 @@ final class Replace_Label_Command {
 		list( $repo, $old_label, $new_label ) = $args;
 
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "wp-cli/{$repo}";
+			$repo = "fp-cli/{$repo}";
 		}
 
 		$delete = WP_CLI\Utils\get_flag_value( $assoc_args, 'delete', false );

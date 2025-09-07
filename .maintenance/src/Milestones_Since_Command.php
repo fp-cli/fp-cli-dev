@@ -24,7 +24,7 @@ final class Milestones_Since_Command {
 		list( $repo, $date ) = $args;
 
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "wp-cli/{$repo}";
+			$repo = "fp-cli/{$repo}";
 		}
 
 		$date = new DateTime( $date );

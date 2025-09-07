@@ -11,7 +11,7 @@ final class Release_Date_Command {
 	 *
 	 * <repo>
 	 * : Name of the repository to fetch the release notes for. If no user/org
-	 * was provided, 'wp-cli' org is assumed.
+	 * was provided, 'fp-cli' org is assumed.
 	 *
 	 * <release>
 	 * : Name of the release to fetch the release notes for.
@@ -23,7 +23,7 @@ final class Release_Date_Command {
 		list( $repo, $milestone_name ) = $args;
 
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "wp-cli/{$repo}";
+			$repo = "fp-cli/{$repo}";
 		}
 
 		$has_v   = 0 === strpos( $milestone_name, 'v' );

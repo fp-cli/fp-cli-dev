@@ -12,7 +12,7 @@ final class Release_Notes_Command {
 	 *
 	 * [<repo>]
 	 * : Name of the repository to fetch the release notes for. If no user/org
-	 * was provided, 'wp-cli' org is assumed. If no repo is passed, release
+	 * was provided, 'fp-cli' org is assumed. If no repo is passed, release
 	 * notes for the entire org state since the last bundle release are fetched.
 	 *
 	 * [<milestone>...]
@@ -69,10 +69,10 @@ final class Release_Notes_Command {
 		// Get the release notes for the lowest open project milestones.
 		foreach (
 			array(
-				'wp-cli/wp-cli-bundle',
-				'wp-cli/wp-cli',
-				'wp-cli/handbook',
-				'wp-cli/wp-cli.github.com',
+				'fp-cli/fp-cli-bundle',
+				'fp-cli/fp-cli',
+				'fp-cli/handbook',
+				'fp-cli/fp-cli.github.com',
 			) as $repo
 		) {
 			$milestones = GitHub::get_project_milestones( $repo );
@@ -105,7 +105,7 @@ final class Release_Notes_Command {
 
 		// Identify all command dependencies and their release notes
 
-		$bundle = 'wp-cli/wp-cli-bundle';
+		$bundle = 'fp-cli/fp-cli-bundle';
 
 		$milestones = GitHub::get_project_milestones(
 			$bundle,
@@ -150,16 +150,16 @@ final class Release_Notes_Command {
 		foreach ( $composer_json['packages'] as $package ) {
 			$package_name       = $package['name'];
 			$version_constraint = str_replace( 'v', '', $package['version'] );
-			if ( ! preg_match( '#^wp-cli/.+-command$#', $package_name )
+			if ( ! preg_match( '#^fp-cli/.+-command$#', $package_name )
 				&& ! in_array(
 					$package_name,
 					array(
-						'wp-cli/wp-cli-tests',
-						'wp-cli/regenerate-readme',
-						'wp-cli/autoload-splitter',
-						'wp-cli/wp-config-transformer',
-						'wp-cli/php-cli-tools',
-						'wp-cli/spyc',
+						'fp-cli/fp-cli-tests',
+						'fp-cli/regenerate-readme',
+						'fp-cli/autoload-splitter',
+						'fp-cli/fp-config-transformer',
+						'fp-cli/php-cli-tools',
+						'fp-cli/spyc',
 					),
 					true
 				) ) {
@@ -199,7 +199,7 @@ final class Release_Notes_Command {
 		$format
 	) {
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "wp-cli/{$repo}";
+			$repo = "fp-cli/{$repo}";
 		}
 
 		$milestone_names = (array) $milestone_names;

@@ -8,15 +8,15 @@ $skip_list = array(
 	'package-index',
 	'regenerate-readme',
 	'sample-plugin',
-	'wp-cli-dev',
-	'wp-cli-roadmap',
+	'fp-cli-dev',
+	'fp-cli-roadmap',
 );
 
 $clone_destination_map = array(
 	'.github' => 'dot-github',
 );
 
-$request = 'https://api.github.com/orgs/wp-cli/repos?per_page=100';
+$request = 'https://api.github.com/orgs/fp-cli/repos?per_page=100';
 $headers = '';
 $token   = getenv( 'GITHUB_TOKEN' );
 if ( ! empty( $token ) ) {

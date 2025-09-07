@@ -110,8 +110,8 @@ XML;
 			$exclude_folders[] = "{$command_folder}/vendor";
 		}
 
-		// hard code, always exclude the vendor/wp-cli, it's only symlinks.
-		$exclude_folders[] = 'vendor/wp-cli';
+		// hard code, always exclude the vendor/fp-cli, it's only symlinks.
+		$exclude_folders[] = 'vendor/fp-cli';
 		$exclude_folders[] = 'builds/phar';
 
 		return $exclude_folders;

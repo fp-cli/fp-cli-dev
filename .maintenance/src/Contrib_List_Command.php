@@ -8,13 +8,13 @@ final class Contrib_List_Command {
 	/**
 	 * Lists all contributors to this release.
 	 *
-	 * Run within the main WP-CLI project repository.
+	 * Run within the main FP-CLI project repository.
 	 *
 	 * ## OPTIONS
 	 *
 	 * [<repo>]
 	 * : Name of the repository to fetch the release notes for. If no user/org
-	 * was provided, 'wp-cli' org is assumed. If no repo is passed, release
+	 * was provided, 'fp-cli' org is assumed. If no repo is passed, release
 	 * notes for the entire org state since the last bundle release are fetched.
 	 *
 	 * [<milestone>...]
@@ -49,10 +49,10 @@ final class Contrib_List_Command {
 		if ( empty( $repos ) ) {
 			$use_bundle = true;
 			$repos      = [
-				'wp-cli/wp-cli-bundle',
-				'wp-cli/wp-cli',
-				'wp-cli/handbook',
-				'wp-cli/wp-cli.github.com',
+				'fp-cli/fp-cli-bundle',
+				'fp-cli/fp-cli',
+				'fp-cli/handbook',
+				'fp-cli/fp-cli.github.com',
 			];
 		}
 
@@ -119,7 +119,7 @@ final class Contrib_List_Command {
 		if ( $use_bundle ) {
 			// Identify all command dependencies and their contributors
 
-			$bundle = 'wp-cli/wp-cli-bundle';
+			$bundle = 'fp-cli/fp-cli-bundle';
 
 			$milestones = GitHub::get_project_milestones( $bundle, array( 'state' => 'closed' ) );
 			$milestone  = array_reduce(
@@ -143,7 +143,7 @@ final class Contrib_List_Command {
 
 			// TODO: Only need for initial v2.
 			$composer_json['packages'][] = array(
-				'name'    => 'wp-cli/i18n-command',
+				'name'    => 'fp-cli/i18n-command',
 				'version' => 'v2',
 			);
 			usort(
@@ -156,16 +156,16 @@ final class Contrib_List_Command {
 			foreach ( $composer_json['packages'] as $package ) {
 				$package_name       = $package['name'];
 				$version_constraint = str_replace( 'v', '', $package['version'] );
-				if ( ! preg_match( '#^wp-cli/.+-command$#', $package_name )
+				if ( ! preg_match( '#^fp-cli/.+-command$#', $package_name )
 					&& ! in_array(
 						$package_name,
 						array(
-							'wp-cli/wp-cli-tests',
-							'wp-cli/regenerate-readme',
-							'wp-cli/autoload-splitter',
-							'wp-cli/wp-config-transformer',
-							'wp-cli/php-cli-tools',
-							'wp-cli/spyc',
+							'fp-cli/fp-cli-tests',
+							'fp-cli/regenerate-readme',
+							'fp-cli/autoload-splitter',
+							'fp-cli/fp-config-transformer',
+							'fp-cli/php-cli-tools',
+							'fp-cli/spyc',
 						),
 						true
 					) ) {

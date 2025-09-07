@@ -22,7 +22,7 @@ final class Milestones_After_Command {
 		list( $repo, $milestone_name ) = $args;
 
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "wp-cli/{$repo}";
+			$repo = "fp-cli/{$repo}";
 		}
 
 		$threshold_reached = false;

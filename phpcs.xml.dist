@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="WP-CLI-Dev">
-	<description>Custom ruleset for the WP-CLI development environment</description>
+<ruleset name="FP-CLI-Dev">
+	<description>Custom ruleset for the FP-CLI development environment</description>
 
 	<!--
 	#############################################################################
@@ -48,7 +48,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<exclude-pattern>*/.maintenance/*</exclude-pattern>
 	</rule>
-	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
+	<rule ref="WordPress.FP.GlobalVariablesOverride.Prohibited">
 		<exclude-pattern>*/.maintenance/*</exclude-pattern>
 	</rule>
 

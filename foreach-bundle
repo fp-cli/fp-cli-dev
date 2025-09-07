@@ -5,13 +5,13 @@
 
 get_bundle_dependencies()
 {
-	echo "wp-cli/wp-cli-bundle"
-	curl --silent "https://raw.githubusercontent.com/wp-cli/wp-cli-bundle/main/composer.json" \
-		| jq --raw-output '."require" | keys[] | select(startswith("wp-cli/"))'
+	echo "fp-cli/fp-cli-bundle"
+	curl --silent "https://raw.githubusercontent.com/fp-cli/fp-cli-bundle/main/composer.json" \
+		| jq --raw-output '."require" | keys[] | select(startswith("fp-cli/"))'
 }
 
 while read -r dependency; do
-	# Remove wp-cli/ prefix
+	# Remove fp-cli/ prefix
     repo_path="${dependency:7}"
     if [ ! -d "${repo_path}" ]; then
 		continue

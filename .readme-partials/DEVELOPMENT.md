@@ -7,4 +7,4 @@ cd core-command
 gh repo fork
 ```
 
-As the folders are also symlinked into the Composer `vendor` folder, you will always have the latest changes available when running WP-CLI through the `vendor/bin/wp` executable.
+As the folders are also symlinked into the Composer `vendor` folder, you will always have the latest changes available when running FP-CLI through the `vendor/bin/fp` executable.

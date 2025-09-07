@@ -436,14 +436,14 @@ class GitHub {
 	}
 
 	/**
-	 * Get all repositories of the wp-cli organization.
+	 * Get all repositories of the fp-cli organization.
 	 *
 	 * @param array  $args
 	 *
 	 * @return stdClass[]
 	 */
 	public static function get_organization_repos( $args = [] ) {
-		$request_url = self::API_ROOT . 'orgs/wp-cli/repos';
+		$request_url = self::API_ROOT . 'orgs/fp-cli/repos';
 
 		$args = array_merge(
 			[
@@ -494,7 +494,7 @@ class GitHub {
 			$headers,
 			array(
 				'Accept'     => 'application/vnd.github.v3+json',
-				'User-Agent' => 'WP-CLI',
+				'User-Agent' => 'FP-CLI',
 			)
 		);
 		$token   = getenv( 'GITHUB_TOKEN' );

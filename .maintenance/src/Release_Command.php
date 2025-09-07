@@ -12,13 +12,13 @@ final class Release_Command {
 	 *
 	 * [<repo>...]
 	 * : Name(s) of the repository to close the milestoe for. If no user/org was
-	 * provided, 'wp-cli' org is assumed.
+	 * provided, 'fp-cli' org is assumed.
 	 *
 	 * [--bundle]
 	 * : Close the milestones for the entire bundle.
 	 *
 	 * [--all]
-	 * : Close the milestones for all repositories in the wp-cli organization.
+	 * : Close the milestones for all repositories in the fp-cli organization.
 	 *
 	 * @subcommand close-released
 	 * @when       before_wp_load
@@ -35,7 +35,7 @@ final class Release_Command {
 
 		foreach ( $repos as $repo ) {
 			if ( false === strpos( $repo, '/' ) ) {
-				$repo = "wp-cli/{$repo}";
+				$repo = "fp-cli/{$repo}";
 			}
 
 			WP_CLI::log( "--- {$repo} ---" );
@@ -62,13 +62,13 @@ final class Release_Command {
 	 *
 	 * [<repo>...]
 	 * : Name(s) of the repository to generate a release for. If no user/org was
-	 * provided, 'wp-cli' org is assumed.
+	 * provided, 'fp-cli' org is assumed.
 	 *
 	 * [--bundle]
 	 * : Generate releases for the entire bundle.
 	 *
 	 * [--all]
-	 * : Generate releases for all repositories in the wp-cli organization.
+	 * : Generate releases for all repositories in the fp-cli organization.
 	 *
 	 * @when before_wp_load
 	 */
@@ -84,7 +84,7 @@ final class Release_Command {
 
 		foreach ( $repos as $repo ) {
 			if ( false === strpos( $repo, '/' ) ) {
-				$repo = "wp-cli/{$repo}";
+				$repo = "fp-cli/{$repo}";
 			}
 
 			WP_CLI::log( "--- {$repo} ---" );
@@ -150,7 +150,7 @@ final class Release_Command {
 		$format
 	) {
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "wp-cli/{$repo}";
+			$repo = "fp-cli/{$repo}";
 		}
 
 		$milestone_names = (array) $milestone_names;
@@ -290,8 +290,8 @@ final class Release_Command {
 
 	private function get_bundle_repos() {
 		$repos             = [];
-		$default_branch    = GitHub::get_default_branch( 'wp-cli/wp-cli-bundle' );
-		$composer_lock_url = "https://raw.githubusercontent.com/wp-cli/wp-cli-bundle/{$default_branch}/composer.lock";
+		$default_branch    = GitHub::get_default_branch( 'fp-cli/fp-cli-bundle' );
+		$composer_lock_url = "https://raw.githubusercontent.com/fp-cli/fp-cli-bundle/{$default_branch}/composer.lock";
 		$response          = Utils\http_request( 'GET', $composer_lock_url );
 		if ( 200 !== $response->status_code ) {
 			WP_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
@@ -307,16 +307,16 @@ final class Release_Command {
 
 		foreach ( $composer_json['packages'] as $package ) {
 			$package_name = $package['name'];
-			if ( ! preg_match( '#^wp-cli/.+-command$#', $package_name )
+			if ( ! preg_match( '#^fp-cli/.+-command$#', $package_name )
 				&& ! in_array(
 					$package_name,
 					array(
-						'wp-cli/wp-cli-tests',
-						'wp-cli/regenerate-readme',
-						'wp-cli/autoload-splitter',
-						'wp-cli/wp-config-transformer',
-						'wp-cli/php-cli-tools',
-						'wp-cli/spyc',
+						'fp-cli/fp-cli-tests',
+						'fp-cli/regenerate-readme',
+						'fp-cli/autoload-splitter',
+						'fp-cli/fp-config-transformer',
+						'fp-cli/php-cli-tools',
+						'fp-cli/spyc',
 					),
 					true
 				) ) {
