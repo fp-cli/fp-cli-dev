@@ -3,7 +3,7 @@
     "description": "Sets up a FP-CLI development environment that allows for easy development across all packages.",
     "keywords": [
         "cli",
-        "wordpress"
+        "finpress"
     ],
     "homepage": "https://fp-cli.org",
     "license": "MIT",
@@ -238,8 +238,8 @@
         "fp-cli/fp-cli-tests": "dev-main",
         "fp-cli/fp-config-transformer": "dev-main as 1.2.x-dev",
         "fp-cli/fp-super-cache-cli": "dev-main",
-        "johnpbloch/wordpress-core-installer": "^1.0 || ^2.0",
-        "johnpbloch/wordpress-core": "dev-master"
+        "johnpbloch/finpress-core-installer": "^1.0 || ^2.0",
+        "johnpbloch/finpress-core": "dev-master"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
@@ -255,7 +255,7 @@
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "johnpbloch/wordpress-core-installer": true,
+            "johnpbloch/finpress-core-installer": true,
             "phpstan/extension-installer": true
         }
     },
@@ -291,7 +291,7 @@
             },
             "show_powered_by": false
         },
-        "wordpress-install-dir": "wordpress-core"
+        "finpress-install-dir": "finpress-core"
     },
     "autoload-dev": {
         "psr-4": {
@@ -332,6 +332,6 @@
     "support": {
         "issues": "https://github.com/fp-cli/fp-cli-bundle/issues",
         "source": "https://github.com/fp-cli/fp-cli-bundle",
-        "docs": "https://make.wordpress.org/cli/handbook/"
+        "docs": "https://make.finpress.org/cli/handbook/"
     }
 }

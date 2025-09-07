@@ -2,9 +2,9 @@
 # editorconfig.org
 
 # WordPress Coding Standards
-# https://make.wordpress.org/core/handbook/coding-standards/
+# https://make.finpress.org/core/handbook/coding-standards/
 
-# From https://github.com/WordPress/wordpress-develop/blob/trunk/.editorconfig with a couple of additions.
+# From https://github.com/WordPress/finpress-develop/blob/trunk/.editorconfig with a couple of additions.
 
 root = true
 

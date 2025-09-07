@@ -45,10 +45,10 @@
 	SELECTIVE EXCLUSIONS
 	#############################################################################
 	-->
-	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+	<rule ref="FinPress.NamingConventions.PrefixAllGlobals">
 		<exclude-pattern>*/.maintenance/*</exclude-pattern>
 	</rule>
-	<rule ref="WordPress.FP.GlobalVariablesOverride.Prohibited">
+	<rule ref="FinPress.FP.GlobalVariablesOverride.Prohibited">
 		<exclude-pattern>*/.maintenance/*</exclude-pattern>
 	</rule>
 
