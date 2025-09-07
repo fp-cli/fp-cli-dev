@@ -1,4 +1,4 @@
-wp-cli/wp-cli-dev
+fp-cli/fp-cli-dev
 =================
 
 Sets up a WP-CLI development environment that allows for easy development across all packages.
