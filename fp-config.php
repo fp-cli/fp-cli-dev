@@ -71,7 +71,7 @@ define( 'NONCE_SALT',       'put your unique phrase here' );
  *
  * @link https://developer.finpress.org/advanced-administration/finpress/fp-config/#table-prefix
  */
-$table_prefix = 'wp_';
+$table_prefix = 'fp_';
 
 /**
  * For developers: FinPress debugging mode.

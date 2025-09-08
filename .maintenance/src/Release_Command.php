@@ -21,7 +21,7 @@ final class Release_Command {
 	 * : Close the milestones for all repositories in the fp-cli organization.
 	 *
 	 * @subcommand close-released
-	 * @when       before_wp_load
+	 * @when       before_fp_load
 	 */
 	public function close_released( $args, $assoc_args ) {
 
@@ -70,7 +70,7 @@ final class Release_Command {
 	 * [--all]
 	 * : Generate releases for all repositories in the fp-cli organization.
 	 *
-	 * @when before_wp_load
+	 * @when before_fp_load
 	 */
 	public function generate( $args, $assoc_args ) {
 

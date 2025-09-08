@@ -16,7 +16,7 @@ final class Release_Date_Command {
 	 * <release>
 	 * : Name of the release to fetch the release notes for.
 	 *
-	 * @when before_wp_load
+	 * @when before_fp_load
 	 */
 	public function __invoke( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 

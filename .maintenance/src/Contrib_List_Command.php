@@ -30,7 +30,7 @@ final class Contrib_List_Command {
 	 *   - html
 	 * ---
 	 *
-	 * @when before_wp_load
+	 * @when before_fp_load
 	 */
 	public function __invoke( $args, $assoc_args ) {
 		$repos      = null;

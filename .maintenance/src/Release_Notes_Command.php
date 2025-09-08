@@ -36,7 +36,7 @@ final class Release_Notes_Command {
 	 *   - html
 	 * ---
 	 *
-	 * @when before_wp_load
+	 * @when before_fp_load
 	 */
 	public function __invoke( $args, $assoc_args ) {
 

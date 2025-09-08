@@ -22,7 +22,7 @@ final class Replace_Label_Command {
 	 * [--delete]
 	 * : Delete the old label after the operation is complete.
 	 *
-	 * @when before_wp_load
+	 * @when before_fp_load
 	 */
 	public function __invoke( $args, $assoc_args ) {
 

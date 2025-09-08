@@ -17,7 +17,7 @@ final class Milestones_Since_Command {
 	 * <date>
 	 * : Threshold date to filter by.
 	 *
-	 * @when before_wp_load
+	 * @when before_fp_load
 	 */
 	public function __invoke( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 

@@ -15,7 +15,7 @@ final class Milestones_After_Command {
 	 * <milestone>
 	 * : Milestone to serve as treshold.
 	 *
-	 * @when before_wp_load
+	 * @when before_fp_load
 	 */
 	public function __invoke( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 
