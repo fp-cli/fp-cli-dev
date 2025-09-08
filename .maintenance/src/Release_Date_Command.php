@@ -1,6 +1,6 @@
-<?php namespace WP_CLI\Maintenance;
+<?php namespace FP_CLI\Maintenance;
 
-use WP_CLI;
+use FP_CLI;
 
 final class Release_Date_Command {
 
@@ -35,6 +35,6 @@ final class Release_Date_Command {
 			array( 'state' => 'all' )
 		);
 
-		WP_CLI::log( $release->published_at );
+		FP_CLI::log( $release->published_at );
 	}
 }

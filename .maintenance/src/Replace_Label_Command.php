@@ -1,6 +1,6 @@
-<?php namespace WP_CLI\Maintenance;
+<?php namespace FP_CLI\Maintenance;
 
-use WP_CLI;
+use FP_CLI;
 
 final class Replace_Label_Command {
 
@@ -32,7 +32,7 @@ final class Replace_Label_Command {
 			$repo = "fp-cli/{$repo}";
 		}
 
-		$delete = WP_CLI\Utils\get_flag_value( $assoc_args, 'delete', false );
+		$delete = FP_CLI\Utils\get_flag_value( $assoc_args, 'delete', false );
 
 		foreach ( GitHub::get_issues_by_label( $repo, $old_label ) as $issue ) {
 			GitHub::remove_label( $repo, $issue->number, $old_label );
@@ -43,6 +43,6 @@ final class Replace_Label_Command {
 			GitHub::delete_label( $repo, $old_label );
 		}
 
-		WP_CLI::success( "Label '{$old_label}' was replaced with '{$new_label}' in the '{$repo}' repository." );
+		FP_CLI::success( "Label '{$old_label}' was replaced with '{$new_label}' in the '{$repo}' repository." );
 	}
 }

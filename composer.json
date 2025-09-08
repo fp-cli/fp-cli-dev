@@ -295,7 +295,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "WP_CLI\\Maintenance\\": ".maintenance/src/"
+            "FP_CLI\\Maintenance\\": ".maintenance/src/"
         },
         "files": [
             ".maintenance/bootstrap.php"

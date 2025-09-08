@@ -1,7 +1,7 @@
-<?php namespace WP_CLI\Maintenance;
+<?php namespace FP_CLI\Maintenance;
 
-use WP_CLI;
-use WP_CLI\Utils;
+use FP_CLI;
+use FP_CLI\Utils;
 
 final class Release_Notes_Command {
 
@@ -87,13 +87,13 @@ final class Release_Notes_Command {
 			);
 
 			if ( ! $milestone ) {
-				WP_CLI::debug( "No milestone found for repo '{$repo}'", 'release-notes' );
+				FP_CLI::debug( "No milestone found for repo '{$repo}'", 'release-notes' );
 				continue;
 			}
 
-			WP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
+			FP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
 
-			WP_CLI::log( $this->repo_heading( $repo, $format ) );
+			FP_CLI::log( $this->repo_heading( $repo, $format ) );
 
 			$this->get_repo_release_notes(
 				$repo,
@@ -131,7 +131,7 @@ final class Release_Notes_Command {
 		);
 		$response          = Utils\http_request( 'GET', $composer_lock_url );
 		if ( 200 !== $response->status_code ) {
-			WP_CLI::error(
+			FP_CLI::error(
 				sprintf(
 					'Could not fetch composer.json (HTTP code %d)',
 					$response->status_code
@@ -166,7 +166,7 @@ final class Release_Notes_Command {
 				continue;
 			}
 
-			WP_CLI::log( $this->repo_heading( $package_name, $format ) );
+			FP_CLI::log( $this->repo_heading( $package_name, $format ) );
 
 			// Closed milestones denote a tagged release
 			$milestones = GitHub::get_project_milestones(
@@ -227,7 +227,7 @@ final class Release_Notes_Command {
 		}
 
 		if ( ! empty( $milestone_names ) ) {
-			WP_CLI::warning(
+			FP_CLI::warning(
 				sprintf(
 					"Couldn't find the requested milestone(s) '%s' in repository '%s'.",
 					implode( "', '", $milestone_names ),
@@ -239,7 +239,7 @@ final class Release_Notes_Command {
 		$entries = array();
 		foreach ( $milestones as $milestone ) {
 
-			WP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
+			FP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
 
 			switch ( $source ) {
 				case 'release':
@@ -254,11 +254,11 @@ final class Release_Notes_Command {
 					);
 
 					if ( $release ) {
-						WP_CLI::log( $release->body );
+						FP_CLI::log( $release->body );
 						break;
 					}
 
-					WP_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
+					FP_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
 					// Intentionally falling through.
 				case 'pull-request':
 					$pull_requests = GitHub::get_project_milestone_pull_requests(
@@ -274,13 +274,13 @@ final class Release_Notes_Command {
 					}
 					break;
 				default:
-					WP_CLI::error( "Unknown --source: {$source}" );
+					FP_CLI::error( "Unknown --source: {$source}" );
 			}
 		}
 
 		$template = 'html' === $format ? '<ul>%s</ul>' : '%s';
 
-		WP_CLI::log( sprintf( $template, implode( '', $entries ) ) );
+		FP_CLI::log( sprintf( $template, implode( '', $entries ) ) );
 	}
 
 	private function get_pull_request_reference(

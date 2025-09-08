@@ -1,7 +1,7 @@
-<?php namespace WP_CLI\Maintenance;
+<?php namespace FP_CLI\Maintenance;
 
-use WP_CLI;
-use WP_CLI\Utils;
+use FP_CLI;
+use FP_CLI\Utils;
 
 final class Release_Command {
 
@@ -38,16 +38,16 @@ final class Release_Command {
 				$repo = "fp-cli/{$repo}";
 			}
 
-			WP_CLI::log( "--- {$repo} ---" );
+			FP_CLI::log( "--- {$repo} ---" );
 
 			$releases   = GitHub::get_project_releases( $repo );
 			$milestones = GitHub::get_project_milestones( $repo );
 
 			foreach ( $milestones as $milestone ) {
-				WP_CLI::log( "Checking milestone '{$milestone->title}'..." );
+				FP_CLI::log( "Checking milestone '{$milestone->title}'..." );
 				foreach ( $releases as $release ) {
 					if ( $release->tag_name === $milestone->title || "v{$milestone->title}" === $release->tag_name ) {
-						WP_CLI::log( "Found matching release '{$release->tag_name}', closing milestone '{$milestone->title}'..." );
+						FP_CLI::log( "Found matching release '{$release->tag_name}', closing milestone '{$milestone->title}'..." );
 						GitHub::close_milestone( $repo, $milestone->number );
 					}
 				}
@@ -87,23 +87,23 @@ final class Release_Command {
 				$repo = "fp-cli/{$repo}";
 			}
 
-			WP_CLI::log( "--- {$repo} ---" );
+			FP_CLI::log( "--- {$repo} ---" );
 
 			$releases   = GitHub::get_project_releases( $repo );
 			$milestones = GitHub::get_project_milestones( $repo );
 
 			foreach ( $milestones as $milestone ) {
-				WP_CLI::log( "Checking milestone '{$milestone->title}'..." );
+				FP_CLI::log( "Checking milestone '{$milestone->title}'..." );
 				foreach ( $releases as $release ) {
 					if ( $release->tag_name === $milestone->title || "v{$milestone->title}" === $release->tag_name ) {
-						WP_CLI::log( "Found matching release '{$release->tag_name}', skipping milestone '{$milestone->title}'..." );
+						FP_CLI::log( "Found matching release '{$release->tag_name}', skipping milestone '{$milestone->title}'..." );
 						continue 2;
 					}
 				}
-				WP_CLI::log( "Milestone '{$milestone->title}' does not have a matching release, generating one..." );
+				FP_CLI::log( "Milestone '{$milestone->title}' does not have a matching release, generating one..." );
 
 				if ( $this->has_open_items_on_milestone( $repo, $milestone->number ) ) {
-					WP_CLI::warning( "Skipping milestone '{$milestone->title}' as it has open issues/PRs assigned to it." );
+					FP_CLI::warning( "Skipping milestone '{$milestone->title}' as it has open issues/PRs assigned to it." );
 					continue 2;
 				}
 
@@ -111,10 +111,10 @@ final class Release_Command {
 				$tag           = "v{$milestone->title}";
 				$release_notes = $this->get_release_notes( $repo, $milestone->title, 'pull-request', 'markdown' );
 
-				WP_CLI::log( 'Generating the following release:' );
-				WP_CLI::log( '-----' );
-				WP_CLI::log( "{$title} ({$tag})\n{$release_notes}" );
-				WP_CLI::log( '-----' );
+				FP_CLI::log( 'Generating the following release:' );
+				FP_CLI::log( '-----' );
+				FP_CLI::log( "{$title} ({$tag})\n{$release_notes}" );
+				FP_CLI::log( '-----' );
 
 				fwrite( STDOUT, 'Is the above correct? [y/n] ' );
 				$answer = strtolower( trim( fgets( STDIN ) ) );
@@ -124,10 +124,10 @@ final class Release_Command {
 
 				$default_branch = GitHub::get_default_branch( $repo );
 
-				WP_CLI::log( "Creating release {$title} {$tag}..." );
+				FP_CLI::log( "Creating release {$title} {$tag}..." );
 				GitHub::create_release( $repo, $tag, $default_branch, $title, $release_notes );
 
-				WP_CLI::log( "Closing milestone '{$milestone->title}'" );
+				FP_CLI::log( "Closing milestone '{$milestone->title}'" );
 				GitHub::close_milestone( $repo, $milestone->number );
 			}
 		}
@@ -178,7 +178,7 @@ final class Release_Command {
 		}
 
 		if ( ! empty( $milestone_names ) ) {
-			WP_CLI::warning(
+			FP_CLI::warning(
 				sprintf(
 					"Couldn't find the requested milestone(s) '%s' in repository '%s'.",
 					implode( "', '", $milestone_names ),
@@ -190,7 +190,7 @@ final class Release_Command {
 		$entries = array();
 		foreach ( $milestones as $milestone ) {
 
-			WP_CLI::debug(
+			FP_CLI::debug(
 				"Using milestone '{$milestone->title}' for repo '{$repo}'",
 				'release generate'
 			);
@@ -211,7 +211,7 @@ final class Release_Command {
 						return $release->body;
 					}
 
-					WP_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
+					FP_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
 					// Intentionally falling through.
 				case 'pull-request':
 					$pull_requests = GitHub::get_project_milestone_pull_requests(
@@ -227,7 +227,7 @@ final class Release_Command {
 					}
 					break;
 				default:
-					WP_CLI::error( "Unknown --source: {$source}" );
+					FP_CLI::error( "Unknown --source: {$source}" );
 			}
 		}
 
@@ -294,7 +294,7 @@ final class Release_Command {
 		$composer_lock_url = "https://raw.githubusercontent.com/fp-cli/fp-cli-bundle/{$default_branch}/composer.lock";
 		$response          = Utils\http_request( 'GET', $composer_lock_url );
 		if ( 200 !== $response->status_code ) {
-			WP_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
+			FP_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
 		}
 		$composer_json = json_decode( $response->body, true );
 

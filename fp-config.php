@@ -77,7 +77,7 @@ $table_prefix = 'wp_';
  * For developers: FinPress debugging mode.
  *
  * Change this to true to enable the display of notices during development.
- * It is strongly recommended that plugin and theme developers use WP_DEBUG
+ * It is strongly recommended that plugin and theme developers use FP_DEBUG
  * in their development environments.
  *
  * For information on other constants that can be used for debugging,
@@ -85,7 +85,7 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.finpress.org/advanced-administration/debug/debug-finpress/
  */
-define( 'WP_DEBUG', false );
+define( 'FP_DEBUG', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 

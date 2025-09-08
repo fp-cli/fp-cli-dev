@@ -1,7 +1,7 @@
-<?php namespace WP_CLI\Maintenance;
+<?php namespace FP_CLI\Maintenance;
 
-use WP_CLI;
-use WP_CLI\Utils;
+use FP_CLI;
+use FP_CLI\Utils;
 
 final class Contrib_List_Command {
 
@@ -87,7 +87,7 @@ final class Contrib_List_Command {
 				}
 
 				if ( ! empty( $milestone_names ) ) {
-					WP_CLI::warning(
+					FP_CLI::warning(
 						sprintf(
 							"Couldn't find the requested milestone(s) '%s' in repository '%s'.",
 							implode( "', '", $milestone_names ),
@@ -105,12 +105,12 @@ final class Contrib_List_Command {
 			}
 			$entries = array();
 			foreach ( $milestones as $milestone ) {
-				WP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
-				WP_CLI::log( 'Current open ' . $repo . ' milestone: ' . $milestone->title );
+				FP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
+				FP_CLI::log( 'Current open ' . $repo . ' milestone: ' . $milestone->title );
 				$pull_requests     = GitHub::get_project_milestone_pull_requests( $repo, $milestone->number );
 				$repo_contributors = GitHub::parse_contributors_from_pull_requests( $pull_requests );
-				WP_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
-				WP_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
+				FP_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
+				FP_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
 				$pull_request_count += count( $pull_requests );
 				$contributors        = array_merge( $contributors, $repo_contributors );
 			}
@@ -134,10 +134,10 @@ final class Contrib_List_Command {
 			$tag        = ! empty( $milestone ) ? "v{$milestone}" : GitHub::get_default_branch( $bundle );
 
 			$composer_lock_url = sprintf( 'https://raw.githubusercontent.com/%s/%s/composer.lock', $bundle, $tag );
-			WP_CLI::log( 'Fetching ' . $composer_lock_url );
+			FP_CLI::log( 'Fetching ' . $composer_lock_url );
 			$response = Utils\http_request( 'GET', $composer_lock_url );
 			if ( 200 !== $response->status_code ) {
-				WP_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
+				FP_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
 			}
 			$composer_json = json_decode( $response->body, true );
 
@@ -186,12 +186,12 @@ final class Contrib_List_Command {
 				if ( empty( $milestone_ids ) ) {
 					continue;
 				}
-				WP_CLI::log( 'Closed ' . $package_name . ' milestone(s): ' . implode( ', ', $milestone_titles ) );
+				FP_CLI::log( 'Closed ' . $package_name . ' milestone(s): ' . implode( ', ', $milestone_titles ) );
 				foreach ( $milestone_ids as $milestone_id ) {
 					$pull_requests     = GitHub::get_project_milestone_pull_requests( $package_name, $milestone_id );
 					$repo_contributors = GitHub::parse_contributors_from_pull_requests( $pull_requests );
-					WP_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
-					WP_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
+					FP_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
+					FP_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
 					$pull_request_count += count( $pull_requests );
 					$contributors        = array_merge( $contributors, $repo_contributors );
 				}
@@ -200,8 +200,8 @@ final class Contrib_List_Command {
 
 		$contributors = array_diff( $contributors, $ignored_contributors );
 
-		WP_CLI::log( 'Total contributors: ' . count( $contributors ) );
-		WP_CLI::log( 'Total pull requests: ' . $pull_request_count );
+		FP_CLI::log( 'Total contributors: ' . count( $contributors ) );
+		FP_CLI::log( 'Total pull requests: ' . $pull_request_count );
 
 		// Sort and render the contributor list
 		asort( $contributors, SORT_NATURAL | SORT_FLAG_CASE );
@@ -215,7 +215,7 @@ final class Contrib_List_Command {
 				}
 			}
 			$contrib_list = rtrim( $contrib_list, ', ' );
-			WP_CLI::log( $contrib_list );
+			FP_CLI::log( $contrib_list );
 		}
 	}
 }

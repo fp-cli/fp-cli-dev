@@ -1,8 +1,8 @@
-<?php namespace WP_CLI\Maintenance;
+<?php namespace FP_CLI\Maintenance;
 
 use stdClass;
-use WP_CLI;
-use WP_CLI\Utils;
+use FP_CLI;
+use FP_CLI\Utils;
 
 class GitHub {
 
@@ -92,7 +92,7 @@ class GitHub {
 	) {
 
 		if ( ! getenv( 'GITHUB_TOKEN' ) ) {
-			WP_CLI::error( 'GITHUB_TOKEN environment variable must be set.' );
+			FP_CLI::error( 'GITHUB_TOKEN environment variable must be set.' );
 		}
 
 		$request_url = sprintf(
@@ -519,7 +519,7 @@ class GitHub {
 				return false;
 			}
 
-			WP_CLI::error(
+			FP_CLI::error(
 				sprintf(
 					"Failed request to $url\nGitHub API returned: %s (HTTP code %d)",
 					$response->body,

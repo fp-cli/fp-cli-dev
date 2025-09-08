@@ -1,7 +1,7 @@
-<?php namespace WP_CLI\Maintenance;
+<?php namespace FP_CLI\Maintenance;
 
 use DateTime;
-use WP_CLI;
+use FP_CLI;
 
 final class Milestones_Since_Command {
 
@@ -46,6 +46,6 @@ final class Milestones_Since_Command {
 			$milestones
 		);
 
-		WP_CLI::log( implode( ' ', $milestone_titles ) );
+		FP_CLI::log( implode( ' ', $milestone_titles ) );
 	}
 }
