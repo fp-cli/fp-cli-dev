@@ -1,11 +1,11 @@
 {
-    "name": "fp-cli/fp-cli-dev",
-    "description": "Sets up a FP-CLI development environment that allows for easy development across all packages.",
+    "name": "fin-cli/fin-cli-dev",
+    "description": "Sets up a FIN-CLI development environment that allows for easy development across all packages.",
     "keywords": [
         "cli",
         "finpress"
     ],
-    "homepage": "https://fp-cli.org",
+    "homepage": "https://fin-cli.org",
     "license": "MIT",
     "repositories": [
         {
@@ -14,11 +14,11 @@
         },
         {
             "type": "path",
-            "url": "fp-cli"
+            "url": "fin-cli"
         },
         {
             "type": "path",
-            "url": "fp-cli.github.com"
+            "url": "fin-cli.github.com"
         },
         {
             "type": "path",
@@ -30,7 +30,7 @@
         },
         {
             "type": "path",
-            "url": "fp-super-cache-cli"
+            "url": "fin-super-cache-cli"
         },
         {
             "type": "path",
@@ -170,7 +170,7 @@
         },
         {
             "type": "path",
-            "url": "fp-config-transformer"
+            "url": "fin-config-transformer"
         },
         {
             "type": "path",
@@ -182,11 +182,11 @@
         },
         {
             "type": "path",
-            "url": "fp-cli-tests"
+            "url": "fin-cli-tests"
         },
         {
             "type": "path",
-            "url": "fp-cli-bundle"
+            "url": "fin-cli-bundle"
         },
         {
             "type": "path",
@@ -197,47 +197,47 @@
         "php": ">=7.2.24",
         "ext-json": "*",
         "ext-dom": "*",
-        "fp-cli/admin-command": "dev-main",
-        "fp-cli/automated-tests": "dev-main",
-        "fp-cli/cache-command": "dev-main",
-        "fp-cli/checksum-command": "dev-main",
-        "fp-cli/config-command": "dev-main",
-        "fp-cli/core-command": "dev-main",
-        "fp-cli/cron-command": "dev-main",
-        "fp-cli/db-command": "dev-main",
-        "fp-cli/dist-archive-command": "dev-main",
-        "fp-cli/doctor-command": "dev-main",
-        "fp-cli/embed-command": "dev-main",
-        "fp-cli/entity-command": "dev-main",
-        "fp-cli/eval-command": "dev-main",
-        "fp-cli/export-command": "dev-main",
-        "fp-cli/extension-command": "dev-main",
-        "fp-cli/find-command": "dev-main",
-        "fp-cli/google-sitemap-generator-cli": "dev-main",
-        "fp-cli/i18n-command": "dev-main",
-        "fp-cli/import-command": "dev-main",
-        "fp-cli/language-command": "dev-main",
-        "fp-cli/maintenance-mode-command": "dev-main",
-        "fp-cli/media-command": "dev-main",
-        "fp-cli/mustangostang-spyc": "dev-master as 0.6.x-dev",
-        "fp-cli/package-command": "dev-main",
-        "fp-cli/php-cli-tools": "dev-master as 0.12.x-dev",
-        "fp-cli/profile-command": "dev-main",
-        "fp-cli/restful": "dev-main",
-        "fp-cli/rewrite-command": "dev-main",
-        "fp-cli/role-command": "dev-main",
-        "fp-cli/scaffold-command": "dev-main",
-        "fp-cli/scaffold-package-command": "dev-main",
-        "fp-cli/search-replace-command": "dev-main",
-        "fp-cli/server-command": "dev-main",
-        "fp-cli/shell-command": "dev-main",
-        "fp-cli/super-admin-command": "dev-main",
-        "fp-cli/widget-command": "dev-main",
-        "fp-cli/fp-cli": "dev-main",
-        "fp-cli/fp-cli-bundle": "dev-main",
-        "fp-cli/fp-cli-tests": "dev-main",
-        "fp-cli/fp-config-transformer": "dev-main as 1.2.x-dev",
-        "fp-cli/fp-super-cache-cli": "dev-main",
+        "fin-cli/admin-command": "dev-main",
+        "fin-cli/automated-tests": "dev-main",
+        "fin-cli/cache-command": "dev-main",
+        "fin-cli/checksum-command": "dev-main",
+        "fin-cli/config-command": "dev-main",
+        "fin-cli/core-command": "dev-main",
+        "fin-cli/cron-command": "dev-main",
+        "fin-cli/db-command": "dev-main",
+        "fin-cli/dist-archive-command": "dev-main",
+        "fin-cli/doctor-command": "dev-main",
+        "fin-cli/embed-command": "dev-main",
+        "fin-cli/entity-command": "dev-main",
+        "fin-cli/eval-command": "dev-main",
+        "fin-cli/export-command": "dev-main",
+        "fin-cli/extension-command": "dev-main",
+        "fin-cli/find-command": "dev-main",
+        "fin-cli/google-sitemap-generator-cli": "dev-main",
+        "fin-cli/i18n-command": "dev-main",
+        "fin-cli/import-command": "dev-main",
+        "fin-cli/language-command": "dev-main",
+        "fin-cli/maintenance-mode-command": "dev-main",
+        "fin-cli/media-command": "dev-main",
+        "fin-cli/mustangostang-spyc": "dev-master as 0.6.x-dev",
+        "fin-cli/package-command": "dev-main",
+        "fin-cli/php-cli-tools": "dev-master as 0.12.x-dev",
+        "fin-cli/profile-command": "dev-main",
+        "fin-cli/restful": "dev-main",
+        "fin-cli/rewrite-command": "dev-main",
+        "fin-cli/role-command": "dev-main",
+        "fin-cli/scaffold-command": "dev-main",
+        "fin-cli/scaffold-package-command": "dev-main",
+        "fin-cli/search-replace-command": "dev-main",
+        "fin-cli/server-command": "dev-main",
+        "fin-cli/shell-command": "dev-main",
+        "fin-cli/super-admin-command": "dev-main",
+        "fin-cli/widget-command": "dev-main",
+        "fin-cli/fin-cli": "dev-main",
+        "fin-cli/fin-cli-bundle": "dev-main",
+        "fin-cli/fin-cli-tests": "dev-main",
+        "fin-cli/fin-config-transformer": "dev-main as 1.2.x-dev",
+        "fin-cli/fin-super-cache-cli": "dev-main",
         "dieselfox1/finpress-core-installer": "^1.0 || ^2.0",
         "dieselfox1/finpress-core": "dev-master"
     },
@@ -245,12 +245,12 @@
         "roave/security-advisories": "dev-latest"
     },
     "suggest": {
-        "psy/psysh": "Enhanced `fp shell` functionality"
+        "psy/psysh": "Enhanced `fin shell` functionality"
     },
     "config": {
         "process-timeout": 7200,
         "preferred-install": {
-            "fp-cli/*": "source"
+            "fin-cli/*": "source"
         },
         "sort-packages": true,
         "allow-plugins": {
@@ -295,7 +295,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "FP_CLI\\Maintenance\\": ".maintenance/src/"
+            "FIN_CLI\\Maintenance\\": ".maintenance/src/"
         },
         "files": [
             ".maintenance/bootstrap.php"
@@ -330,8 +330,8 @@
         ]
     },
     "support": {
-        "issues": "https://github.com/fp-cli/fp-cli-bundle/issues",
-        "source": "https://github.com/fp-cli/fp-cli-bundle",
+        "issues": "https://github.com/fin-cli/fin-cli-bundle/issues",
+        "source": "https://github.com/fin-cli/fin-cli-bundle",
         "docs": "https://make.finpress.org/cli/handbook/"
     }
 }

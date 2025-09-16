@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="FP-CLI-Dev">
-	<description>Custom ruleset for the FP-CLI development environment</description>
+<ruleset name="FIN-CLI-Dev">
+	<description>Custom ruleset for the FIN-CLI development environment</description>
 
 	<!--
 	#############################################################################
@@ -24,11 +24,11 @@
 
 	<!--
 	#############################################################################
-	USE THE FP_CLI_CS RULESET
+	USE THE FIN_CLI_CS RULESET
 	#############################################################################
 	-->
 
-	<rule ref="FP_CLI_CS"/>
+	<rule ref="FIN_CLI_CS"/>
 
 	<!--
 	#############################################################################
@@ -48,7 +48,7 @@
 	<rule ref="FinPress.NamingConventions.PrefixAllGlobals">
 		<exclude-pattern>*/.maintenance/*</exclude-pattern>
 	</rule>
-	<rule ref="FinPress.FP.GlobalVariablesOverride.Prohibited">
+	<rule ref="FinPress.FIN.GlobalVariablesOverride.Prohibited">
 		<exclude-pattern>*/.maintenance/*</exclude-pattern>
 	</rule>
 

@@ -1,10 +1,10 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
-use FP_CLI;
+use FIN_CLI;
 
 /**
- * Provides tools to manage the FP-CLI GitHub organization and the release process.
+ * Provides tools to manage the FIN-CLI GitHub organization and the release process.
  */
-final class Maintenance_Namespace extends FP_CLI\Dispatcher\CommandNamespace {
+final class Maintenance_Namespace extends FIN_CLI\Dispatcher\CommandNamespace {
 
 }

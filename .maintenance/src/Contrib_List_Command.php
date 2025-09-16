@@ -1,20 +1,20 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
-use FP_CLI;
-use FP_CLI\Utils;
+use FIN_CLI;
+use FIN_CLI\Utils;
 
 final class Contrib_List_Command {
 
 	/**
 	 * Lists all contributors to this release.
 	 *
-	 * Run within the main FP-CLI project repository.
+	 * Run within the main FIN-CLI project repository.
 	 *
 	 * ## OPTIONS
 	 *
 	 * [<repo>]
 	 * : Name of the repository to fetch the release notes for. If no user/org
-	 * was provided, 'fp-cli' org is assumed. If no repo is passed, release
+	 * was provided, 'fin-cli' org is assumed. If no repo is passed, release
 	 * notes for the entire org state since the last bundle release are fetched.
 	 *
 	 * [<milestone>...]
@@ -30,7 +30,7 @@ final class Contrib_List_Command {
 	 *   - html
 	 * ---
 	 *
-	 * @when before_fp_load
+	 * @when before_fin_load
 	 */
 	public function __invoke( $args, $assoc_args ) {
 		$repos      = null;
@@ -49,10 +49,10 @@ final class Contrib_List_Command {
 		if ( empty( $repos ) ) {
 			$use_bundle = true;
 			$repos      = [
-				'fp-cli/fp-cli-bundle',
-				'fp-cli/fp-cli',
-				'fp-cli/handbook',
-				'fp-cli/fp-cli.github.com',
+				'fin-cli/fin-cli-bundle',
+				'fin-cli/fin-cli',
+				'fin-cli/handbook',
+				'fin-cli/fin-cli.github.com',
 			];
 		}
 
@@ -87,7 +87,7 @@ final class Contrib_List_Command {
 				}
 
 				if ( ! empty( $milestone_names ) ) {
-					FP_CLI::warning(
+					FIN_CLI::warning(
 						sprintf(
 							"Couldn't find the requested milestone(s) '%s' in repository '%s'.",
 							implode( "', '", $milestone_names ),
@@ -105,12 +105,12 @@ final class Contrib_List_Command {
 			}
 			$entries = array();
 			foreach ( $milestones as $milestone ) {
-				FP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
-				FP_CLI::log( 'Current open ' . $repo . ' milestone: ' . $milestone->title );
+				FIN_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
+				FIN_CLI::log( 'Current open ' . $repo . ' milestone: ' . $milestone->title );
 				$pull_requests     = GitHub::get_project_milestone_pull_requests( $repo, $milestone->number );
 				$repo_contributors = GitHub::parse_contributors_from_pull_requests( $pull_requests );
-				FP_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
-				FP_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
+				FIN_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
+				FIN_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
 				$pull_request_count += count( $pull_requests );
 				$contributors        = array_merge( $contributors, $repo_contributors );
 			}
@@ -119,7 +119,7 @@ final class Contrib_List_Command {
 		if ( $use_bundle ) {
 			// Identify all command dependencies and their contributors
 
-			$bundle = 'fp-cli/fp-cli-bundle';
+			$bundle = 'fin-cli/fin-cli-bundle';
 
 			$milestones = GitHub::get_project_milestones( $bundle, array( 'state' => 'closed' ) );
 			$milestone  = array_reduce(
@@ -134,16 +134,16 @@ final class Contrib_List_Command {
 			$tag        = ! empty( $milestone ) ? "v{$milestone}" : GitHub::get_default_branch( $bundle );
 
 			$composer_lock_url = sprintf( 'https://raw.githubusercontent.com/%s/%s/composer.lock', $bundle, $tag );
-			FP_CLI::log( 'Fetching ' . $composer_lock_url );
+			FIN_CLI::log( 'Fetching ' . $composer_lock_url );
 			$response = Utils\http_request( 'GET', $composer_lock_url );
 			if ( 200 !== $response->status_code ) {
-				FP_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
+				FIN_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
 			}
 			$composer_json = json_decode( $response->body, true );
 
 			// TODO: Only need for initial v2.
 			$composer_json['packages'][] = array(
-				'name'    => 'fp-cli/i18n-command',
+				'name'    => 'fin-cli/i18n-command',
 				'version' => 'v2',
 			);
 			usort(
@@ -156,16 +156,16 @@ final class Contrib_List_Command {
 			foreach ( $composer_json['packages'] as $package ) {
 				$package_name       = $package['name'];
 				$version_constraint = str_replace( 'v', '', $package['version'] );
-				if ( ! preg_match( '#^fp-cli/.+-command$#', $package_name )
+				if ( ! preg_match( '#^fin-cli/.+-command$#', $package_name )
 					&& ! in_array(
 						$package_name,
 						array(
-							'fp-cli/fp-cli-tests',
-							'fp-cli/regenerate-readme',
-							'fp-cli/autoload-splitter',
-							'fp-cli/fp-config-transformer',
-							'fp-cli/php-cli-tools',
-							'fp-cli/spyc',
+							'fin-cli/fin-cli-tests',
+							'fin-cli/regenerate-readme',
+							'fin-cli/autoload-splitter',
+							'fin-cli/fin-config-transformer',
+							'fin-cli/php-cli-tools',
+							'fin-cli/spyc',
 						),
 						true
 					) ) {
@@ -186,12 +186,12 @@ final class Contrib_List_Command {
 				if ( empty( $milestone_ids ) ) {
 					continue;
 				}
-				FP_CLI::log( 'Closed ' . $package_name . ' milestone(s): ' . implode( ', ', $milestone_titles ) );
+				FIN_CLI::log( 'Closed ' . $package_name . ' milestone(s): ' . implode( ', ', $milestone_titles ) );
 				foreach ( $milestone_ids as $milestone_id ) {
 					$pull_requests     = GitHub::get_project_milestone_pull_requests( $package_name, $milestone_id );
 					$repo_contributors = GitHub::parse_contributors_from_pull_requests( $pull_requests );
-					FP_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
-					FP_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
+					FIN_CLI::log( ' - Contributors: ' . count( $repo_contributors ) );
+					FIN_CLI::log( ' - Pull requests: ' . count( $pull_requests ) );
 					$pull_request_count += count( $pull_requests );
 					$contributors        = array_merge( $contributors, $repo_contributors );
 				}
@@ -200,8 +200,8 @@ final class Contrib_List_Command {
 
 		$contributors = array_diff( $contributors, $ignored_contributors );
 
-		FP_CLI::log( 'Total contributors: ' . count( $contributors ) );
-		FP_CLI::log( 'Total pull requests: ' . $pull_request_count );
+		FIN_CLI::log( 'Total contributors: ' . count( $contributors ) );
+		FIN_CLI::log( 'Total pull requests: ' . $pull_request_count );
 
 		// Sort and render the contributor list
 		asort( $contributors, SORT_NATURAL | SORT_FLAG_CASE );
@@ -215,7 +215,7 @@ final class Contrib_List_Command {
 				}
 			}
 			$contrib_list = rtrim( $contrib_list, ', ' );
-			FP_CLI::log( $contrib_list );
+			FIN_CLI::log( $contrib_list );
 		}
 	}
 }

@@ -1,6 +1,6 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
-use FP_CLI;
+use FIN_CLI;
 
 final class Release_Date_Command {
 
@@ -11,19 +11,19 @@ final class Release_Date_Command {
 	 *
 	 * <repo>
 	 * : Name of the repository to fetch the release notes for. If no user/org
-	 * was provided, 'fp-cli' org is assumed.
+	 * was provided, 'fin-cli' org is assumed.
 	 *
 	 * <release>
 	 * : Name of the release to fetch the release notes for.
 	 *
-	 * @when before_fp_load
+	 * @when before_fin_load
 	 */
 	public function __invoke( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 
 		list( $repo, $milestone_name ) = $args;
 
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "fp-cli/{$repo}";
+			$repo = "fin-cli/{$repo}";
 		}
 
 		$has_v   = 0 === strpos( $milestone_name, 'v' );
@@ -35,6 +35,6 @@ final class Release_Date_Command {
 			array( 'state' => 'all' )
 		);
 
-		FP_CLI::log( $release->published_at );
+		FIN_CLI::log( $release->published_at );
 	}
 }

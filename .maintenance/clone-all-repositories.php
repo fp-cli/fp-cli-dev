@@ -8,15 +8,15 @@ $skip_list = array(
 	'package-index',
 	'regenerate-readme',
 	'sample-plugin',
-	'fp-cli-dev',
-	'fp-cli-roadmap',
+	'fin-cli-dev',
+	'fin-cli-roadmap',
 );
 
 $clone_destination_map = array(
 	'.github' => 'dot-github',
 );
 
-$request = 'https://api.github.com/orgs/fp-cli/repos?per_page=100';
+$request = 'https://api.github.com/orgs/fin-cli/repos?per_page=100';
 $headers = '';
 $token   = getenv( 'GITHUB_TOKEN' );
 if ( ! empty( $token ) ) {
@@ -44,7 +44,7 @@ foreach ( $repositories as $repository ) {
 	$destination = isset( $clone_destination_map[ $repository->name ] ) ? $clone_destination_map[ $repository->name ] : $repository->name;
 
 	if ( ! is_dir( $destination ) ) {
-		printf( "Fetching \033[32mfp-cli/{$repository->name}\033[0m...\n" );
+		printf( "Fetching \033[32mfin-cli/{$repository->name}\033[0m...\n" );
 		$clone_url = getenv( 'GITHUB_ACTION' ) ? $repository->clone_url : $repository->ssh_url;
 		system( "git clone {$clone_url} {$destination}" );
 	}

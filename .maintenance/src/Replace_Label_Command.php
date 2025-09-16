@@ -1,6 +1,6 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
-use FP_CLI;
+use FIN_CLI;
 
 final class Replace_Label_Command {
 
@@ -22,17 +22,17 @@ final class Replace_Label_Command {
 	 * [--delete]
 	 * : Delete the old label after the operation is complete.
 	 *
-	 * @when before_fp_load
+	 * @when before_fin_load
 	 */
 	public function __invoke( $args, $assoc_args ) {
 
 		list( $repo, $old_label, $new_label ) = $args;
 
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "fp-cli/{$repo}";
+			$repo = "fin-cli/{$repo}";
 		}
 
-		$delete = FP_CLI\Utils\get_flag_value( $assoc_args, 'delete', false );
+		$delete = FIN_CLI\Utils\get_flag_value( $assoc_args, 'delete', false );
 
 		foreach ( GitHub::get_issues_by_label( $repo, $old_label ) as $issue ) {
 			GitHub::remove_label( $repo, $issue->number, $old_label );
@@ -43,6 +43,6 @@ final class Replace_Label_Command {
 			GitHub::delete_label( $repo, $old_label );
 		}
 
-		FP_CLI::success( "Label '{$old_label}' was replaced with '{$new_label}' in the '{$repo}' repository." );
+		FIN_CLI::success( "Label '{$old_label}' was replaced with '{$new_label}' in the '{$repo}' repository." );
 	}
 }

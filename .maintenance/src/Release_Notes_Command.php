@@ -1,7 +1,7 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
-use FP_CLI;
-use FP_CLI\Utils;
+use FIN_CLI;
+use FIN_CLI\Utils;
 
 final class Release_Notes_Command {
 
@@ -12,7 +12,7 @@ final class Release_Notes_Command {
 	 *
 	 * [<repo>]
 	 * : Name of the repository to fetch the release notes for. If no user/org
-	 * was provided, 'fp-cli' org is assumed. If no repo is passed, release
+	 * was provided, 'fin-cli' org is assumed. If no repo is passed, release
 	 * notes for the entire org state since the last bundle release are fetched.
 	 *
 	 * [<milestone>...]
@@ -36,7 +36,7 @@ final class Release_Notes_Command {
 	 *   - html
 	 * ---
 	 *
-	 * @when before_fp_load
+	 * @when before_fin_load
 	 */
 	public function __invoke( $args, $assoc_args ) {
 
@@ -69,10 +69,10 @@ final class Release_Notes_Command {
 		// Get the release notes for the lowest open project milestones.
 		foreach (
 			array(
-				'fp-cli/fp-cli-bundle',
-				'fp-cli/fp-cli',
-				'fp-cli/handbook',
-				'fp-cli/fp-cli.github.com',
+				'fin-cli/fin-cli-bundle',
+				'fin-cli/fin-cli',
+				'fin-cli/handbook',
+				'fin-cli/fin-cli.github.com',
 			) as $repo
 		) {
 			$milestones = GitHub::get_project_milestones( $repo );
@@ -87,13 +87,13 @@ final class Release_Notes_Command {
 			);
 
 			if ( ! $milestone ) {
-				FP_CLI::debug( "No milestone found for repo '{$repo}'", 'release-notes' );
+				FIN_CLI::debug( "No milestone found for repo '{$repo}'", 'release-notes' );
 				continue;
 			}
 
-			FP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
+			FIN_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
 
-			FP_CLI::log( $this->repo_heading( $repo, $format ) );
+			FIN_CLI::log( $this->repo_heading( $repo, $format ) );
 
 			$this->get_repo_release_notes(
 				$repo,
@@ -105,7 +105,7 @@ final class Release_Notes_Command {
 
 		// Identify all command dependencies and their release notes
 
-		$bundle = 'fp-cli/fp-cli-bundle';
+		$bundle = 'fin-cli/fin-cli-bundle';
 
 		$milestones = GitHub::get_project_milestones(
 			$bundle,
@@ -131,7 +131,7 @@ final class Release_Notes_Command {
 		);
 		$response          = Utils\http_request( 'GET', $composer_lock_url );
 		if ( 200 !== $response->status_code ) {
-			FP_CLI::error(
+			FIN_CLI::error(
 				sprintf(
 					'Could not fetch composer.json (HTTP code %d)',
 					$response->status_code
@@ -150,23 +150,23 @@ final class Release_Notes_Command {
 		foreach ( $composer_json['packages'] as $package ) {
 			$package_name       = $package['name'];
 			$version_constraint = str_replace( 'v', '', $package['version'] );
-			if ( ! preg_match( '#^fp-cli/.+-command$#', $package_name )
+			if ( ! preg_match( '#^fin-cli/.+-command$#', $package_name )
 				&& ! in_array(
 					$package_name,
 					array(
-						'fp-cli/fp-cli-tests',
-						'fp-cli/regenerate-readme',
-						'fp-cli/autoload-splitter',
-						'fp-cli/fp-config-transformer',
-						'fp-cli/php-cli-tools',
-						'fp-cli/spyc',
+						'fin-cli/fin-cli-tests',
+						'fin-cli/regenerate-readme',
+						'fin-cli/autoload-splitter',
+						'fin-cli/fin-config-transformer',
+						'fin-cli/php-cli-tools',
+						'fin-cli/spyc',
 					),
 					true
 				) ) {
 				continue;
 			}
 
-			FP_CLI::log( $this->repo_heading( $package_name, $format ) );
+			FIN_CLI::log( $this->repo_heading( $package_name, $format ) );
 
 			// Closed milestones denote a tagged release
 			$milestones = GitHub::get_project_milestones(
@@ -199,7 +199,7 @@ final class Release_Notes_Command {
 		$format
 	) {
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "fp-cli/{$repo}";
+			$repo = "fin-cli/{$repo}";
 		}
 
 		$milestone_names = (array) $milestone_names;
@@ -227,7 +227,7 @@ final class Release_Notes_Command {
 		}
 
 		if ( ! empty( $milestone_names ) ) {
-			FP_CLI::warning(
+			FIN_CLI::warning(
 				sprintf(
 					"Couldn't find the requested milestone(s) '%s' in repository '%s'.",
 					implode( "', '", $milestone_names ),
@@ -239,7 +239,7 @@ final class Release_Notes_Command {
 		$entries = array();
 		foreach ( $milestones as $milestone ) {
 
-			FP_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
+			FIN_CLI::debug( "Using milestone '{$milestone->title}' for repo '{$repo}'", 'release-notes' );
 
 			switch ( $source ) {
 				case 'release':
@@ -254,11 +254,11 @@ final class Release_Notes_Command {
 					);
 
 					if ( $release ) {
-						FP_CLI::log( $release->body );
+						FIN_CLI::log( $release->body );
 						break;
 					}
 
-					FP_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
+					FIN_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
 					// Intentionally falling through.
 				case 'pull-request':
 					$pull_requests = GitHub::get_project_milestone_pull_requests(
@@ -274,13 +274,13 @@ final class Release_Notes_Command {
 					}
 					break;
 				default:
-					FP_CLI::error( "Unknown --source: {$source}" );
+					FIN_CLI::error( "Unknown --source: {$source}" );
 			}
 		}
 
 		$template = 'html' === $format ? '<ul>%s</ul>' : '%s';
 
-		FP_CLI::log( sprintf( $template, implode( '', $entries ) ) );
+		FIN_CLI::log( sprintf( $template, implode( '', $entries ) ) );
 	}
 
 	private function get_pull_request_reference(

@@ -1,7 +1,7 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
 use DateTime;
-use FP_CLI;
+use FIN_CLI;
 
 final class Milestones_Since_Command {
 
@@ -17,14 +17,14 @@ final class Milestones_Since_Command {
 	 * <date>
 	 * : Threshold date to filter by.
 	 *
-	 * @when before_fp_load
+	 * @when before_fin_load
 	 */
 	public function __invoke( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 
 		list( $repo, $date ) = $args;
 
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "fp-cli/{$repo}";
+			$repo = "fin-cli/{$repo}";
 		}
 
 		$date = new DateTime( $date );
@@ -46,6 +46,6 @@ final class Milestones_Since_Command {
 			$milestones
 		);
 
-		FP_CLI::log( implode( ' ', $milestone_titles ) );
+		FIN_CLI::log( implode( ' ', $milestone_titles ) );
 	}
 }

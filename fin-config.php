@@ -2,8 +2,8 @@
 /**
  * The base configuration for FinPress
  *
- * The fp-config.php creation script uses this file during the installation.
- * You don't have to use the website, you can copy this file to "fp-config.php"
+ * The fin-config.php creation script uses this file during the installation.
+ * You don't have to use the website, you can copy this file to "fin-config.php"
  * and fill in the values.
  *
  * This file contains the following configurations:
@@ -13,7 +13,7 @@
  * * Database table prefix
  * * ABSPATH
  *
- * @link https://developer.finpress.org/advanced-administration/finpress/fp-config/
+ * @link https://developer.finpress.org/advanced-administration/finpress/fin-config/
  *
  * @package FinPress
  */
@@ -69,15 +69,15 @@ define( 'NONCE_SALT',       'put your unique phrase here' );
  * Changing this value after FinPress is installed will make your site think
  * it has not been installed.
  *
- * @link https://developer.finpress.org/advanced-administration/finpress/fp-config/#table-prefix
+ * @link https://developer.finpress.org/advanced-administration/finpress/fin-config/#table-prefix
  */
-$table_prefix = 'fp_';
+$table_prefix = 'fin_';
 
 /**
  * For developers: FinPress debugging mode.
  *
  * Change this to true to enable the display of notices during development.
- * It is strongly recommended that plugin and theme developers use FP_DEBUG
+ * It is strongly recommended that plugin and theme developers use FIN_DEBUG
  * in their development environments.
  *
  * For information on other constants that can be used for debugging,
@@ -85,7 +85,7 @@ $table_prefix = 'fp_';
  *
  * @link https://developer.finpress.org/advanced-administration/debug/debug-finpress/
  */
-define( 'FP_DEBUG', false );
+define( 'FIN_DEBUG', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
@@ -99,4 +99,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Sets up FinPress vars and included files. */
-require_once ABSPATH . 'fp-settings.php';
+require_once ABSPATH . 'fin-settings.php';

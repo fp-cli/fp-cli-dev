@@ -5,13 +5,13 @@
 
 get_bundle_dependencies()
 {
-	echo "fp-cli/fp-cli-bundle"
-	curl --silent "https://raw.githubusercontent.com/fp-cli/fp-cli-bundle/main/composer.json" \
-		| jq --raw-output '."require" | keys[] | select(startswith("fp-cli/"))'
+	echo "fin-cli/fin-cli-bundle"
+	curl --silent "https://raw.githubusercontent.com/fin-cli/fin-cli-bundle/main/composer.json" \
+		| jq --raw-output '."require" | keys[] | select(startswith("fin-cli/"))'
 }
 
 while read -r dependency; do
-	# Remove fp-cli/ prefix
+	# Remove fin-cli/ prefix
     repo_path="${dependency:7}"
     if [ ! -d "${repo_path}" ]; then
 		continue

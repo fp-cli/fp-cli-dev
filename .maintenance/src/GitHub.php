@@ -1,8 +1,8 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
 use stdClass;
-use FP_CLI;
-use FP_CLI\Utils;
+use FIN_CLI;
+use FIN_CLI\Utils;
 
 class GitHub {
 
@@ -92,7 +92,7 @@ class GitHub {
 	) {
 
 		if ( ! getenv( 'GITHUB_TOKEN' ) ) {
-			FP_CLI::error( 'GITHUB_TOKEN environment variable must be set.' );
+			FIN_CLI::error( 'GITHUB_TOKEN environment variable must be set.' );
 		}
 
 		$request_url = sprintf(
@@ -436,14 +436,14 @@ class GitHub {
 	}
 
 	/**
-	 * Get all repositories of the fp-cli organization.
+	 * Get all repositories of the fin-cli organization.
 	 *
 	 * @param array  $args
 	 *
 	 * @return stdClass[]
 	 */
 	public static function get_organization_repos( $args = [] ) {
-		$request_url = self::API_ROOT . 'orgs/fp-cli/repos';
+		$request_url = self::API_ROOT . 'orgs/fin-cli/repos';
 
 		$args = array_merge(
 			[
@@ -494,7 +494,7 @@ class GitHub {
 			$headers,
 			array(
 				'Accept'     => 'application/vnd.github.v3+json',
-				'User-Agent' => 'FP-CLI',
+				'User-Agent' => 'FIN-CLI',
 			)
 		);
 		$token   = getenv( 'GITHUB_TOKEN' );
@@ -519,7 +519,7 @@ class GitHub {
 				return false;
 			}
 
-			FP_CLI::error(
+			FIN_CLI::error(
 				sprintf(
 					"Failed request to $url\nGitHub API returned: %s (HTTP code %d)",
 					$response->body,

@@ -1,7 +1,7 @@
-<?php namespace FP_CLI\Maintenance;
+<?php namespace FIN_CLI\Maintenance;
 
-use FP_CLI;
-use FP_CLI\Utils;
+use FIN_CLI;
+use FIN_CLI\Utils;
 
 final class Release_Command {
 
@@ -12,16 +12,16 @@ final class Release_Command {
 	 *
 	 * [<repo>...]
 	 * : Name(s) of the repository to close the milestoe for. If no user/org was
-	 * provided, 'fp-cli' org is assumed.
+	 * provided, 'fin-cli' org is assumed.
 	 *
 	 * [--bundle]
 	 * : Close the milestones for the entire bundle.
 	 *
 	 * [--all]
-	 * : Close the milestones for all repositories in the fp-cli organization.
+	 * : Close the milestones for all repositories in the fin-cli organization.
 	 *
 	 * @subcommand close-released
-	 * @when       before_fp_load
+	 * @when       before_fin_load
 	 */
 	public function close_released( $args, $assoc_args ) {
 
@@ -35,19 +35,19 @@ final class Release_Command {
 
 		foreach ( $repos as $repo ) {
 			if ( false === strpos( $repo, '/' ) ) {
-				$repo = "fp-cli/{$repo}";
+				$repo = "fin-cli/{$repo}";
 			}
 
-			FP_CLI::log( "--- {$repo} ---" );
+			FIN_CLI::log( "--- {$repo} ---" );
 
 			$releases   = GitHub::get_project_releases( $repo );
 			$milestones = GitHub::get_project_milestones( $repo );
 
 			foreach ( $milestones as $milestone ) {
-				FP_CLI::log( "Checking milestone '{$milestone->title}'..." );
+				FIN_CLI::log( "Checking milestone '{$milestone->title}'..." );
 				foreach ( $releases as $release ) {
 					if ( $release->tag_name === $milestone->title || "v{$milestone->title}" === $release->tag_name ) {
-						FP_CLI::log( "Found matching release '{$release->tag_name}', closing milestone '{$milestone->title}'..." );
+						FIN_CLI::log( "Found matching release '{$release->tag_name}', closing milestone '{$milestone->title}'..." );
 						GitHub::close_milestone( $repo, $milestone->number );
 					}
 				}
@@ -62,15 +62,15 @@ final class Release_Command {
 	 *
 	 * [<repo>...]
 	 * : Name(s) of the repository to generate a release for. If no user/org was
-	 * provided, 'fp-cli' org is assumed.
+	 * provided, 'fin-cli' org is assumed.
 	 *
 	 * [--bundle]
 	 * : Generate releases for the entire bundle.
 	 *
 	 * [--all]
-	 * : Generate releases for all repositories in the fp-cli organization.
+	 * : Generate releases for all repositories in the fin-cli organization.
 	 *
-	 * @when before_fp_load
+	 * @when before_fin_load
 	 */
 	public function generate( $args, $assoc_args ) {
 
@@ -84,26 +84,26 @@ final class Release_Command {
 
 		foreach ( $repos as $repo ) {
 			if ( false === strpos( $repo, '/' ) ) {
-				$repo = "fp-cli/{$repo}";
+				$repo = "fin-cli/{$repo}";
 			}
 
-			FP_CLI::log( "--- {$repo} ---" );
+			FIN_CLI::log( "--- {$repo} ---" );
 
 			$releases   = GitHub::get_project_releases( $repo );
 			$milestones = GitHub::get_project_milestones( $repo );
 
 			foreach ( $milestones as $milestone ) {
-				FP_CLI::log( "Checking milestone '{$milestone->title}'..." );
+				FIN_CLI::log( "Checking milestone '{$milestone->title}'..." );
 				foreach ( $releases as $release ) {
 					if ( $release->tag_name === $milestone->title || "v{$milestone->title}" === $release->tag_name ) {
-						FP_CLI::log( "Found matching release '{$release->tag_name}', skipping milestone '{$milestone->title}'..." );
+						FIN_CLI::log( "Found matching release '{$release->tag_name}', skipping milestone '{$milestone->title}'..." );
 						continue 2;
 					}
 				}
-				FP_CLI::log( "Milestone '{$milestone->title}' does not have a matching release, generating one..." );
+				FIN_CLI::log( "Milestone '{$milestone->title}' does not have a matching release, generating one..." );
 
 				if ( $this->has_open_items_on_milestone( $repo, $milestone->number ) ) {
-					FP_CLI::warning( "Skipping milestone '{$milestone->title}' as it has open issues/PRs assigned to it." );
+					FIN_CLI::warning( "Skipping milestone '{$milestone->title}' as it has open issues/PRs assigned to it." );
 					continue 2;
 				}
 
@@ -111,10 +111,10 @@ final class Release_Command {
 				$tag           = "v{$milestone->title}";
 				$release_notes = $this->get_release_notes( $repo, $milestone->title, 'pull-request', 'markdown' );
 
-				FP_CLI::log( 'Generating the following release:' );
-				FP_CLI::log( '-----' );
-				FP_CLI::log( "{$title} ({$tag})\n{$release_notes}" );
-				FP_CLI::log( '-----' );
+				FIN_CLI::log( 'Generating the following release:' );
+				FIN_CLI::log( '-----' );
+				FIN_CLI::log( "{$title} ({$tag})\n{$release_notes}" );
+				FIN_CLI::log( '-----' );
 
 				fwrite( STDOUT, 'Is the above correct? [y/n] ' );
 				$answer = strtolower( trim( fgets( STDIN ) ) );
@@ -124,10 +124,10 @@ final class Release_Command {
 
 				$default_branch = GitHub::get_default_branch( $repo );
 
-				FP_CLI::log( "Creating release {$title} {$tag}..." );
+				FIN_CLI::log( "Creating release {$title} {$tag}..." );
 				GitHub::create_release( $repo, $tag, $default_branch, $title, $release_notes );
 
-				FP_CLI::log( "Closing milestone '{$milestone->title}'" );
+				FIN_CLI::log( "Closing milestone '{$milestone->title}'" );
 				GitHub::close_milestone( $repo, $milestone->number );
 			}
 		}
@@ -150,7 +150,7 @@ final class Release_Command {
 		$format
 	) {
 		if ( false === strpos( $repo, '/' ) ) {
-			$repo = "fp-cli/{$repo}";
+			$repo = "fin-cli/{$repo}";
 		}
 
 		$milestone_names = (array) $milestone_names;
@@ -178,7 +178,7 @@ final class Release_Command {
 		}
 
 		if ( ! empty( $milestone_names ) ) {
-			FP_CLI::warning(
+			FIN_CLI::warning(
 				sprintf(
 					"Couldn't find the requested milestone(s) '%s' in repository '%s'.",
 					implode( "', '", $milestone_names ),
@@ -190,7 +190,7 @@ final class Release_Command {
 		$entries = array();
 		foreach ( $milestones as $milestone ) {
 
-			FP_CLI::debug(
+			FIN_CLI::debug(
 				"Using milestone '{$milestone->title}' for repo '{$repo}'",
 				'release generate'
 			);
@@ -211,7 +211,7 @@ final class Release_Command {
 						return $release->body;
 					}
 
-					FP_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
+					FIN_CLI::warning( "Release notes not found for {$repo}@{$tag}, falling back to pull-request source" );
 					// Intentionally falling through.
 				case 'pull-request':
 					$pull_requests = GitHub::get_project_milestone_pull_requests(
@@ -227,7 +227,7 @@ final class Release_Command {
 					}
 					break;
 				default:
-					FP_CLI::error( "Unknown --source: {$source}" );
+					FIN_CLI::error( "Unknown --source: {$source}" );
 			}
 		}
 
@@ -290,11 +290,11 @@ final class Release_Command {
 
 	private function get_bundle_repos() {
 		$repos             = [];
-		$default_branch    = GitHub::get_default_branch( 'fp-cli/fp-cli-bundle' );
-		$composer_lock_url = "https://raw.githubusercontent.com/fp-cli/fp-cli-bundle/{$default_branch}/composer.lock";
+		$default_branch    = GitHub::get_default_branch( 'fin-cli/fin-cli-bundle' );
+		$composer_lock_url = "https://raw.githubusercontent.com/fin-cli/fin-cli-bundle/{$default_branch}/composer.lock";
 		$response          = Utils\http_request( 'GET', $composer_lock_url );
 		if ( 200 !== $response->status_code ) {
-			FP_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
+			FIN_CLI::error( sprintf( 'Could not fetch composer.json (HTTP code %d)', $response->status_code ) );
 		}
 		$composer_json = json_decode( $response->body, true );
 
@@ -307,16 +307,16 @@ final class Release_Command {
 
 		foreach ( $composer_json['packages'] as $package ) {
 			$package_name = $package['name'];
-			if ( ! preg_match( '#^fp-cli/.+-command$#', $package_name )
+			if ( ! preg_match( '#^fin-cli/.+-command$#', $package_name )
 				&& ! in_array(
 					$package_name,
 					array(
-						'fp-cli/fp-cli-tests',
-						'fp-cli/regenerate-readme',
-						'fp-cli/autoload-splitter',
-						'fp-cli/fp-config-transformer',
-						'fp-cli/php-cli-tools',
-						'fp-cli/spyc',
+						'fin-cli/fin-cli-tests',
+						'fin-cli/regenerate-readme',
+						'fin-cli/autoload-splitter',
+						'fin-cli/fin-config-transformer',
+						'fin-cli/php-cli-tools',
+						'fin-cli/spyc',
 					),
 					true
 				) ) {
